@@ -60,11 +60,15 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(midbottom=(WIDTH // 2, HEIGHT - 10))
 
     def update(self, keys):
-        """매 프레임 한 번 불린다. keys 는 pygame.key.get_pressed() 의 결과."""
-        # TODO(F1): 왼쪽 방향키(keys[pygame.K_LEFT])를 누르고 있으면 PLAYER_SPEED 만큼 왼쪽으로,
-        #           오른쪽 방향키(keys[pygame.K_RIGHT])면 오른쪽으로 움직이게 할 것.
-        #           플레이어가 화면 왼쪽·오른쪽 끝 밖으로 나가지 않도록 위치를 제한.
-        pass
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= PLAYER_SPEED
+
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += PLAYER_SPEED
+
+        self.rect.left = max(0, self.rect.left)
+        self.rect.right = min(WIDTH, self.rect.right)
+       
 
     def shoot(self):
         """플레이어 위쪽 가운데에서 출발하는 총알 하나를 만들어 돌려준다."""
